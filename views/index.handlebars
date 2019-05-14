@@ -1,33 +1,43 @@
-<div class="container">
-    <section id="page-name">
-            <iframe id="main-image" src="https://giphy.com/embed/UAXou95E6oPjW" width="480" height="326" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-            <h1>Eat-Da-Buger</h1>
-    </section>
+<h1>Eat-Da-Burger!</h1>
 
-    <section class="row">
-        <div class="col-md-7 col-left">
-            <table>
-                {{#each burgers}}
-                    {{#unless devoured}}
-                        {{> burgers/burger-block}}
-                    {{/unless}}
-                {{/each}}
-            </table>
-        </div>
-        <div class="col-md-5 col-right">
-            {{#each burgers}}
-                {{#if devoured}}
-                    <div>{{id}}. {{burger_name}}</div>
-                {{/if}}
-            {{/each}}        
-        </div>          
-    </section>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col s6">
+        {{#each burgers}}
+          {{#unless this.devoured}}
+            <div>
+              <form action="/burgers/{{this.id}}?_method=PUT" method="POST">
+                <button type="submit" class='burgerAvailable'> {{this.burger_name}}</button>
+              </form>
+            </div>
+          {{/unless}}
+        {{/each}}
+      </div>
 
-    <form class="create-form">
-        <div class="form-group">
-            <label for="name"></label>
-            <textarea id="name" name="burger-name" rows="2" cols="40" placeholder="What do you want to eat?"></textarea>
-        </div>
-        <button type="submit">Add Burger</button>
-    </form>     
+      <div class="col s6">
+        {{#each burgers}}
+          {{#if this.devoured}}
+            <div class='burgerEaten'>
+              <div>
+                {{this.burger_name}}
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</main>
+
+<h2>Add-A-Burger</h2>
+
+<div class="row">
+  <div class="col s12">
+    <form action="/burgers" method="POST">
+      <input type="text" id="name" name="burger_name" placeholder="burrrrgerrrr">
+      <button type="submit" class="addBurgerButton">Add The Burger</button>
+    </form>
+  </div>
 </div>
+    
